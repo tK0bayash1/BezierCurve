@@ -1,0 +1,5 @@
+﻿  Source.cpp
+d:\cg学習\beziercurve\beziercurve\source.cpp(63): warning C4305: '初期化中': 'double' から 'float' へ切り詰めます。
+d:\cg学習\beziercurve\beziercurve\source.cpp(125): warning C4244: '=': 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+d:\cg学習\beziercurve\beziercurve\source.cpp(126): warning C4244: '=': 'int' から 'FLOAT' への変換です。データが失われる可能性があります。
+  BezierCurve.vcxproj -> D:\CG学習\BezierCurve\Debug\BezierCurve.exe
