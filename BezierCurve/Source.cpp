@@ -68,7 +68,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			XMVECTOR eye_up = XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);          // 視点上方向
 			XMMATRIX View = XMMatrixLookAtLH(eye_pos, eye_lookat, eye_up);  // 左手座標系のビュー行列
 			XMMATRIX Proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)CWIDTH / (FLOAT)CHEIGHT, 0.1f, 110.0f);  // 左手座標系のパースペクティブ射影行列
-			XMMATRIX World = XMMatrixRotationY(x += 0.001f);                          // z軸を回転軸とした回転行列
+			XMMATRIX World = XMMatrixRotationY(x);                          // z軸を回転軸とした回転行列
 
 			// パラメータの受け渡し
 			D3D11_MAPPED_SUBRESOURCE pdata;
@@ -79,7 +79,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			pDeviceContext->Unmap(pConstantBuffer, 0);                                       // GPUからのリソースアクセスを再開
 
 			// 描画実行
-			pDeviceContext->Draw(3, 0);
+			pDeviceContext->Draw(4, 0);
 			pSwapChain->Present(0, 0);
 		}
 	}
@@ -162,10 +162,11 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		VERTEX vertices[] = {
 			XMFLOAT3(-0.5f, 0.5f, 0.0f),
 			XMFLOAT3(0.8f, 0.3f, 0.0f),
+			XMFLOAT3(-0.4f, -0.6f, 0.0f),
 			XMFLOAT3(0.5f, -0.5f, 0.0f),
 		};
 		D3D11_BUFFER_DESC bd;
-		bd.ByteWidth = sizeof(VERTEX) * 3;
+		bd.ByteWidth = sizeof(VERTEX) * 4;
 		bd.Usage = D3D11_USAGE_DEFAULT;
 		bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 		bd.CPUAccessFlags = 0;
@@ -187,7 +188,7 @@ LRESULT CALLBACK WinProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) {
 		UINT offset = 0;
 		pDeviceContext->IASetVertexBuffers(0, 1, &pVertexBuffer, &stride, &offset);      // 頂点データをセット
 		pDeviceContext->IASetInputLayout(pVertexLayout);                             // 頂点レイアウトをセット
-		pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);  // データの入力種類を指定
+		pDeviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP_ADJ);  // データの入力種類を指定
 		pDeviceContext->OMSetRenderTargets(1, &pBackBuffer_RTV, NULL);                   // レンダーターゲットビューのセット
 		pDeviceContext->RSSetViewports(1, &vp);                                          // ビューポートのセット
 		pDeviceContext->VSSetShader(pVertexShader, NULL, 0);                         // 頂点シェーダをセット
