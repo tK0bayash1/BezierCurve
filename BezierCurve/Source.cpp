@@ -68,7 +68,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hInstancePrev, LPSTR pCmdLine,
 			XMVECTOR eye_up = XMVectorSet(0.0f, 1.0f, 0.0f, 1.0f);          // 視点上方向
 			XMMATRIX View = XMMatrixLookAtLH(eye_pos, eye_lookat, eye_up);  // 左手座標系のビュー行列
 			XMMATRIX Proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)CWIDTH / (FLOAT)CHEIGHT, 0.1f, 110.0f);  // 左手座標系のパースペクティブ射影行列
-			XMMATRIX World = XMMatrixRotationY(x);                          // z軸を回転軸とした回転行列
+			XMMATRIX World = XMMatrixRotationY(x += 0.001f);                          // z軸を回転軸とした回転行列
 
 			// パラメータの受け渡し
 			D3D11_MAPPED_SUBRESOURCE pdata;

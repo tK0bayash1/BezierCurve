@@ -31,12 +31,10 @@ void GS(triangle GS_IN gs_in[3], inout LineStream<GS_OUT> stream)
 {
     GS_OUT Out;
 
-    for (float Point = 0.0f; Point <= 1.0f; Point += 0.01f)
+    for (float t = 0.0f; t <= 1.0f; t += 0.01f)
     {
-        Out.Color = float4(Point, 1.0f - Point, 0, 1);
-        float4 left = Point * gs_in[0].Pos + (1.0f - Point) * gs_in[1].Pos;
-        float4 right = Point * gs_in[1].Pos + (1.0f - Point) * gs_in[2].Pos;
-        Out.Pos = Point * left + (1.0f - Point) * right;
+        Out.Color = float4(t, 1.0f - t, 0, 1);
+        Out.Pos = t * t * gs_in[0].Pos + t * (1.0f - t) * gs_in[1].Pos + (1.0f - t) * (1.0f - t) * gs_in[2].Pos;
         Out.Pos = mul(Out.Pos, gWVP);
         stream.Append(Out);
     }
